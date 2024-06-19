@@ -1,0 +1,10 @@
+# requirements.txt
+
+# Este archivo lista todas las dependencias necesarias para ejecutar
+# la aplicación del gestor de tareas. Se recomienda instalar las 
+# dependencias usando pip.
+
+# Para instalar las dependencias, ejecute en la raiz del proyecto:
+# pip install -r requirements.txt
+
+PyQt5
