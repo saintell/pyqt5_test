@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout,
     QLineEdit, QPushButton, QListWidget, QListWidgetItem,
-    QMessageBox, QLabel, QInputDialog
+    QMessageBox, QLabel, QInputDialog, QSizePolicy
 )
 
 class TaskManager(QWidget):
@@ -15,7 +15,7 @@ class TaskManager(QWidget):
         self.setWindowTitle('Gestor de Tareas')
         
         # Establece el tamaño inicial de la ventana
-        self.resize(350, 250)
+        self.resize(500, 300)
 
         # Crea el layout principal
         self.layout = QVBoxLayout()
@@ -59,24 +59,27 @@ class TaskManager(QWidget):
         item_widget = QWidget()
         item_layout = QHBoxLayout()
 
-        # Crea una etiqueta para mostrar el texto de la tarea
+        # Crea una QLabel para mostrar el texto de la tarea
         task_label = QLabel(task_text)
-        item_layout.addWidget(task_label)
+        task_label.setWordWrap(True)           # Permite el ajuste de línea
+        task_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+
+        item_layout.addWidget(task_label, 1)  # El primer argumento es el factor de estiramiento
 
         # Botón para ver la tarea
         view_button = QPushButton('Ver')
-        view_button.clicked.connect(lambda: self.view_task(task_label.text()))
         item_layout.addWidget(view_button)
+        view_button.clicked.connect(lambda: self.view_task(task_label.text()))
 
         # Botón para editar la tarea
         edit_button = QPushButton('Editar')
-        edit_button.clicked.connect(lambda: self.edit_task(task_label, task_item, item_widget))
         item_layout.addWidget(edit_button)
+        edit_button.clicked.connect(lambda: self.edit_task(task_label, task_item, item_widget))
 
         # Botón para eliminar la tarea
         delete_button = QPushButton('Eliminar')
-        delete_button.clicked.connect(lambda: self.remove_task(task_item))
         item_layout.addWidget(delete_button)
+        delete_button.clicked.connect(lambda: self.remove_task(task_item))
 
         item_widget.setLayout(item_layout)
         return item_widget
